@@ -22,6 +22,9 @@ class Minutes {
         this.opts.units.h = this.opts.units.h || 'hour';
         this.opts.units.m = this.opts.units.m || 'minute';
 
+        // Default pluralize (to true).
+        this.opts.pluralize = (typeof this.opts.pluralize === 'undefined') ? true : this.opts.pluralize;
+
     }
 
     toString () {
@@ -74,7 +77,7 @@ class Minutes {
         var str = `${value} ${this.opts.units[unit]}`;
 
         // Make the unit representation plural if required.
-        if (value > 1) {
+        if (this.opts.pluralize && value > 1) {
             str += 's';
         }
 
