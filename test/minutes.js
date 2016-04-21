@@ -193,6 +193,78 @@ describe('Minutes will', () => {
 
         });
 
+        describe('using custom tokens', function () {
+
+            var opts = {
+                    units: {
+                        'm': 'm',
+                        'h': 'h',
+                        'd': 'd',
+                        'w': 'w'
+                    },
+                    pluralize: false,
+                    tokens: {
+                        space: '',
+                        comma: ' ',
+                        and: ' '
+                    }
+                },
+                minutes = new Minutes(9, opts),
+                hours = new Minutes(5*60+23, opts),
+                days = new Minutes(6*24*60+3*60+12, opts),
+                weeks = new Minutes(6*7*24*60+3*24*60+2*60+55, opts);
+
+            it('for minutes', function () {
+
+                expect(minutes.toString()).to.equal('9m');
+
+            });
+
+            it('for hours', function () {
+
+                expect(hours.toString()).to.equal('5h 23m');
+
+            });
+
+            it('for days', function () {
+
+                expect(days.toString()).to.equal('6d 3h 12m');
+
+            });
+
+            it('for weeks', function () {
+
+                expect(weeks.toString()).to.equal('6w 3d 2h 55m');
+
+            });
+
+            it('with regex sensitive characters', function () {
+
+                opts = {
+                    units: {
+                        'm': 'm',
+                        'h': 'h',
+                        'd': 'd',
+                        'w': 'w'
+                    },
+                    pluralize: false,
+                    tokens: {
+                        space: '',
+                        comma: '^(?:=\\.*).+|$&$`$',
+                        and: '^(?:=\\.*).+|$&$`$'
+                    }
+                };
+                minutes = new Minutes(9, opts);
+                hours = new Minutes(5*60+23, opts);
+                days = new Minutes(6*24*60+3*60+12, opts);
+                weeks = new Minutes(6*7*24*60+3*24*60+2*60+55, opts);
+
+                expect(weeks.toString()).to.equal('6w^(?:=\\.*).+|$&$`$3d^(?:=\\.*).+|$&$`$2h^(?:=\\.*).+|$&$`$55m');
+
+            });
+
+        });
+
     });
 
 });

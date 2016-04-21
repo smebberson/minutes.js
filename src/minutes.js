@@ -25,6 +25,14 @@ class Minutes {
         // Default pluralize (to true).
         this.opts.pluralize = (typeof this.opts.pluralize === 'undefined') ? true : this.opts.pluralize;
 
+        // Default separation tokens.
+        this.opts.tokens = this.opts.tokens || {};
+        this.opts.tokens.space = (typeof this.opts.tokens.space === 'undefined') ? ' ' : this.opts.tokens.space;
+        this.opts.tokens.comma = (typeof this.opts.tokens.comma === 'undefined') ? ', ' : this.opts.tokens.comma;
+        this.opts.tokens.and = (typeof this.opts.tokens.and === 'undefined') ? ' and ' : this.opts.tokens.and;
+        this.opts.tokens.plural = (typeof this.opts.tokens.plural === 'undefined') ? 's' : this.opts.tokens.plural;
+
+
     }
 
     toString () {
@@ -59,8 +67,11 @@ class Minutes {
             parts.push(this.formatPart(delta, 'm'));
         }
 
+        // Create the regex to replace the last occurance of `this.opts.tokens.comma` with `this.opts.tokens.and`.
+        var lastOccurence = new RegExp(Minutes.safeRegExpString(this.opts.tokens.comma) + '(?!.*' + Minutes.safeRegExpString(this.opts.tokens.comma) + ')');
+
         // Join parts with `,`, other than the final one which should be `and`.
-        return parts.join(', ').replace(/,(?!.*,)/, ' and');
+        return parts.join(this.opts.tokens.comma).replace(lastOccurence, this.opts.tokens.and);
 
     }
 
@@ -69,16 +80,16 @@ class Minutes {
     //
 
     /*
-     * Format a time unit (i.e. 1 hour as '1 hour').
+     * Format a time unit (i.e. 1 h as '1 hour').
      * @return {String}
     */
     formatPart (value, unit) {
 
-        var str = `${value} ${this.opts.units[unit]}`;
+        var str = value + this.opts.tokens.space + this.opts.units[unit];
 
         // Make the unit representation plural if required.
         if (this.opts.pluralize && value > 1) {
-            str += 's';
+            str += this.opts.tokens.plural;
         }
 
         return str;
@@ -111,6 +122,18 @@ class Minutes {
     */
     static week () {
         return 7*Minutes.day();
+    }
+
+    /*
+     * Return a string that is safe to be used when dynamically building a regular expression.
+     * @return {Number}
+    */
+    static safeRegExpString (str) {
+
+        str = str.replace(/(?:\.|\^|\$|\&|\`|\*|\(|\)|\||\?|\:|\=)/g, '\\$&');
+
+        return str;
+
     }
 
 }
