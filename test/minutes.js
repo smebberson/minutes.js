@@ -106,6 +106,51 @@ describe('Minutes will', () => {
 
         });
 
+        describe('using custom tokens', function () {
+
+            describe('with plurals (default)', function () {
+
+                var opts = {
+                        units: {
+                            'm': 'min',
+                            'h': 'hr',
+                            'd': 'day',
+                            'w': 'wk'
+                        }
+                    },
+                    minutes = new Minutes(10, opts),
+                    hours = new Minutes(2*60+50, opts),
+                    days = new Minutes(2*24*60+9*60+30, opts),
+                    weeks = new Minutes(2*7*24*60+6*24*60+7*60+40, opts);
+
+                it('for minutes', function () {
+
+                    expect(minutes.toString()).to.equal('10 mins');
+
+                });
+
+                it('for hours', function () {
+
+                    expect(hours.toString()).to.equal('2 hrs and 50 mins');
+
+                });
+
+                it('for days', function () {
+
+                    expect(days.toString()).to.equal('2 days, 9 hrs and 30 mins');
+
+                });
+
+                it('for weeks', function () {
+
+                    expect(weeks.toString()).to.equal('2 wks, 6 days, 7 hrs and 40 mins');
+
+                });
+
+            });
+
+        });
+
     });
 
 });
