@@ -2,6 +2,12 @@
 
 class Minutes {
 
+    /**
+     * Create a new instance of minutes, scoped to an integer passed in.
+     * @param  {Number} minutes The number of minutes this instance should work with.
+     * @param  {Object} opts    The options to alter this particular instance of minutes.js
+     * @return {Object}         The initialized instance of Minutes.
+     */
     constructor(minutes, opts) {
 
         // Atempt to parse the minutes as an integer.
@@ -32,9 +38,15 @@ class Minutes {
         this.opts.tokens.and = (typeof this.opts.tokens.and === 'undefined') ? ' and ' : this.opts.tokens.and;
         this.opts.tokens.plural = (typeof this.opts.tokens.plural === 'undefined') ? 's' : this.opts.tokens.plural;
 
+        return this;
 
     }
 
+    /**
+     * Using the options provided to the constructor take the value of the minutes and
+     * format into a string.
+     * @return {String} The formatted string (i.e. `10630` becomes `7 days, 9 hours and 10 minutes`).
+     */
     toString () {
 
         // The delta will reduce in scope as we move through the various time units.
@@ -79,10 +91,12 @@ class Minutes {
     // Instance methods.
     //
 
-    /*
+    /**
      * Format a time unit (i.e. 1 h as '1 hour').
-     * @return {String}
-    */
+     * @param  {Number} value The value of the time unit.
+     * @param  {String} unit  The time unit (either `'w'`, `'h'`, `'m'`, `'d'`).
+     * @return {String}       The string representation of the time unit (i.e. 5 hours).
+     */
     formatPart (value, unit) {
 
         var str = value + this.opts.tokens.space + this.opts.units[unit];
@@ -100,34 +114,35 @@ class Minutes {
     // Static methods.
     //
 
-    /*
+    /**
      * Return the number of minutes in an hour.
-     * @return {Number}
-    */
+     * @return {Number} 60
+     */
     static hour () {
         return 60;
     }
 
-    /*
+    /**
      * Return the number of minutes in a day.
-     * @return {Number}
-    */
+     * @return {Number} 1440
+     */
     static day () {
         return 24*Minutes.hour();
     }
 
-    /*
+    /**
      * Return the number of minutes in a week.
-     * @return {Number}
-    */
+     * @return {Number} 10080.
+     */
     static week () {
         return 7*Minutes.day();
     }
 
-    /*
+    /**
      * Return a string that is safe to be used when dynamically building a regular expression.
-     * @return {Number}
-    */
+     * @param  {String} str The string to escaped.
+     * @return {String}     An escaped version of `str`.
+     */
     static safeRegExpString (str) {
 
         str = str.replace(/(?:\.|\^|\$|\&|\`|\*|\(|\)|\||\?|\:|\=)/g, '\\$&');
