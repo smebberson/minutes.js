@@ -5,6 +5,14 @@ let expect = require('chai').expect,
 
 describe('Minutes will', () => {
 
+    //
+    // Constants
+    //
+
+    const HOUR = 60;
+    const DAY = 24*HOUR;
+    const WEEK = 7*DAY;
+
     it('throw if not passed an integer', function () {
 
         var fn = function () {
@@ -82,7 +90,7 @@ describe('Minutes will', () => {
 
            it('hours and minutes', function () {
 
-                var hours = new Minutes(2*Minutes.hour()+10);
+                var hours = new Minutes(2*HOUR+10);
 
                 expect(hours.toString()).to.equal('2 hours and 10 minutes');
 
