@@ -3,7 +3,7 @@
 let expect = require('chai').expect,
     Minutes = require('../dist/minutes');
 
-describe('Minutes will', () => {
+describe('Minutes', () => {
 
     //
     // Constants
@@ -11,7 +11,7 @@ describe('Minutes will', () => {
 
     const HOUR = 60;
 
-    it('throw if not passed an integer', function () {
+    it('will throw if not passed an integer', function () {
 
         var fn = function () {
             new Minutes('asdf');
@@ -21,7 +21,17 @@ describe('Minutes will', () => {
 
     });
 
-    describe('format', function () {
+    it('will throw if executed without new', function () {
+
+        var fn = function () {
+            Minutes(23); // eslint-disable-line new-cap
+        }
+
+        expect(fn).to.throw(Error, /cannot/i);
+
+    });
+
+    describe('will format', function () {
 
         describe('single time units', function () {
 
