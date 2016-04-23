@@ -1,7 +1,7 @@
 'use strict';
 
 let expect = require('chai').expect,
-    Minutes = require('../src/minutes');
+    Minutes = require('../dist/minutes');
 
 describe('Minutes will', () => {
 

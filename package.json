@@ -5,8 +5,8 @@
   "main": "src/minutes.js",
   "author": "Scott Mebberson",
   "scripts": {
-    "test": "./node_modules/.bin/_mocha",
-    "test-coverage": "./scripts/test-coverage",
+    "test": "gulp && ./node_modules/.bin/_mocha",
+    "test-coverage": "gulp && ./scripts/test-coverage",
     "test-travis": "./scripts/test-travis"
   },
   "devDependencies": {
