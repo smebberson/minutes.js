@@ -6,7 +6,8 @@
   "author": "Scott Mebberson",
   "scripts": {
     "test": "./node_modules/.bin/_mocha",
-    "test-coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --trace-deprecation --check-leaks"
+    "test-coverage": "./scripts/test-coverage",
+    "test-travis": "./scripts/test-travis"
   },
   "devDependencies": {
     "babel-preset-es2015": "6.6.0",
