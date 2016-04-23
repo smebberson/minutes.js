@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WP="/home/nitrous/code/minutes.js"
+WP="."
 
 if test ! -z "$TRAVIS_BUILD_DIR"; then
     WP="$TRAVIS_BUILD_DIR"
