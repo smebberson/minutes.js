@@ -1,6 +1,6 @@
 {
   "name": "minutes.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library for working with minutes in JavaScript.",
   "main": "dist/minutes.js",
   "jsnext:main": "src/minutes.js",

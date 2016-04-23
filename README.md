@@ -9,6 +9,8 @@ $ npm install minutes.js
 $ bower install minutes.js
 ```
 
+Supports browser, Node.js and AMD (and ES6 packages via `src/minutes.js`).
+
 ## API
 
 ```
@@ -22,6 +24,10 @@ hours.toString(); // 2 hours and 50 minutes
 days.toString(); // 2 days, 6 hours and 30 minutes
 weeks.toString(); // 2 weeks, 6 days, 7 hours and 40 minutes
 ```
+
+## Change log
+
+[Review the change log for all changes.](CHANGELOG.md)
 
 ## License
 
