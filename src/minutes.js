@@ -24,7 +24,7 @@
             this.minutes = parseInt(minutes);
 
             // Only accept an integer.
-            if (Number.isNaN()) {
+            if (Number.isNaN(this.minutes)) {
                 throw new Error('Minutes accepts an integer representing minutes.');
             }
 

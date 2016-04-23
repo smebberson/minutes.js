@@ -10,16 +10,14 @@ describe('Minutes will', () => {
     //
 
     const HOUR = 60;
-    const DAY = 24*HOUR;
-    const WEEK = 7*DAY;
 
     it('throw if not passed an integer', function () {
 
         var fn = function () {
-            new Minutes('23.3');
+            new Minutes('asdf');
         }
 
-        expect(fn).to.throw;
+        expect(fn).to.throw(Error, /accepts an integer/);
 
     });
 
