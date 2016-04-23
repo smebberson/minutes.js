@@ -1,12 +1,36 @@
-'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global.Minutes = factory());
+}(this, function () { 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+    var babelHelpers = {};
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+    babelHelpers.classCallCheck = function (instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+      }
+    };
 
-(function () {
+    babelHelpers.createClass = function () {
+      function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+          var descriptor = props[i];
+          descriptor.enumerable = descriptor.enumerable || false;
+          descriptor.configurable = true;
+          if ("value" in descriptor) descriptor.writable = true;
+          Object.defineProperty(target, descriptor.key, descriptor);
+        }
+      }
 
-    'use strict';
+      return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) defineProperties(Constructor, staticProps);
+        return Constructor;
+      };
+    }();
+
+    babelHelpers;
 
     //
     // Constants
@@ -26,7 +50,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          */
 
         function Minutes(minutes, opts) {
-            _classCallCheck(this, Minutes);
+            babelHelpers.classCallCheck(this, Minutes);
+
 
             // Atempt to parse the minutes as an integer.
             this.minutes = parseInt(minutes);
@@ -66,7 +91,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          */
 
 
-        _createClass(Minutes, [{
+        babelHelpers.createClass(Minutes, [{
             key: 'toString',
             value: function toString() {
 
@@ -149,9 +174,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return str.replace(/(?:\.|\^|\$|\&|\`|\*|\(|\)|\||\?|\:|\=)/g, '\\$&');
             }
         }]);
-
         return Minutes;
     }();
 
-    module.exports = Minutes;
-})();
+    return Minutes;
+
+}));

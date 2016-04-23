@@ -2,20 +2,27 @@
   "name": "minutes.js",
   "version": "1.0.0",
   "description": "A library for working with minutes in JavaScript.",
-  "main": "src/minutes.js",
+  "main": "dist/minutes.js",
+  "jsnext:main": "src/minutes.js",
   "author": "Scott Mebberson",
   "scripts": {
-    "test": "gulp && ./node_modules/.bin/_mocha",
-    "test-coverage": "gulp && ./scripts/test-coverage",
+    "pretest": "./node_modules/.bin/rollup -c",
+    "test": "./node_modules/.bin/_mocha",
+    "pretest-coverage": "./node_modules/.bin/rollup -c",
+    "test-coverage": "./scripts/test-coverage",
     "test-travis": "./scripts/test-travis"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smebberson/minutes.js.git"
+  },
   "devDependencies": {
-    "babel-preset-es2015": "6.6.0",
+    "babel-preset-es2015-rollup": "1.1.1",
     "chai": "3.5.0",
-    "gulp": "3.9.1",
-    "gulp-babel": "6.1.2",
     "istanbul": "0.4.3",
-    "mocha": "2.4.5"
+    "mocha": "2.4.5",
+    "rollup": "0.26.0",
+    "rollup-plugin-babel": "2.4.0"
   },
   "keywords": [
     "duration",
