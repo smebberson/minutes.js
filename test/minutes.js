@@ -1,6 +1,7 @@
 'use strict';
 
 let expect = require('chai').expect,
+    clone = require('clone'),
     Minutes = require('../dist/minutes');
 
 describe('Minutes', () => {
@@ -276,6 +277,108 @@ describe('Minutes', () => {
                 weeks = new Minutes(6*7*24*60+3*24*60+2*60+55, opts);
 
                 expect(weeks.toString()).to.equal('6w^(?:=\\.*).+|$&$`$3d^(?:=\\.*).+|$&$`$2h^(?:=\\.*).+|$&$`$55m');
+
+            });
+
+        });
+
+        describe('using custom display options', function () {
+
+            var opts = {
+                    units: {
+                        'm': 'm',
+                        'h': 'h',
+                        'd': 'd',
+                        'w': 'w'
+                    },
+                    pluralize: false,
+                    tokens: {
+                        space: '',
+                        comma: ' ',
+                        and: ' '
+                    }
+                },
+                timespan = 6*7*24*60+3*24*60+2*60+55,
+                minutes = new Minutes(timespan, Object.assign(clone(opts), {
+                    display: {
+                        'h': false,
+                        'd': false,
+                        'w': false
+                    }
+                })),
+                hours = new Minutes(timespan, Object.assign(clone(opts), {
+                    display: {
+                        'd': false,
+                        'w': false
+                    }
+                })),
+                hoursOnly = new Minutes(timespan, Object.assign(clone(opts), {
+                    display: {
+                        'm': false,
+                        'd': false,
+                        'w': false
+                    }
+                })),
+                days = new Minutes(timespan, Object.assign(clone(opts), {
+                    display: {
+                        'w': false
+                    }
+                })),
+                daysOnly = new Minutes(timespan, Object.assign(clone(opts), {
+                    display: {
+                        'm': false,
+                        'h': false,
+                        'w': false
+                    }
+                })),
+                weeks = new Minutes(timespan, opts),
+                weeksOnly = new Minutes(timespan, Object.assign(clone(opts), {
+                    display: {
+                        'm': false,
+                        'h': false,
+                        'd': false
+                    }
+                }));
+
+            it('minutes only', function () {
+
+                expect(minutes.toString()).to.equal('64975m');
+
+            });
+
+            it('hours only', function () {
+
+                expect(hoursOnly.toString()).to.equal('1082h');
+
+            });
+
+            it('days only', function () {
+
+                expect(daysOnly.toString()).to.equal('45d');
+
+            });
+
+            it('weeks only', function () {
+
+                expect(weeksOnly.toString()).to.equal('6w');
+
+            });
+
+            it('hours and minutes only', function () {
+
+                expect(hours.toString()).to.equal('1082h 55m');
+
+            });
+
+            it('days, hours and minutes only', function () {
+
+                expect(days.toString()).to.equal('45d 2h 55m');
+
+            });
+
+            it('weeks, days, hours and minutes', function () {
+
+                expect(weeks.toString()).to.equal('6w 3d 2h 55m');
 
             });
 

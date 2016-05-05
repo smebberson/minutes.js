@@ -71,6 +71,13 @@
             this.opts.units.h = this.opts.units.h || 'hour';
             this.opts.units.m = this.opts.units.m || 'minute';
 
+            // Default the time units to display.
+            this.opts.display = this.opts.display || {};
+            this.opts.display.w = typeof this.opts.display.w === 'undefined' ? true : this.opts.display.w;
+            this.opts.display.d = typeof this.opts.display.d === 'undefined' ? true : this.opts.display.d;
+            this.opts.display.h = typeof this.opts.display.h === 'undefined' ? true : this.opts.display.h;
+            this.opts.display.m = typeof this.opts.display.m === 'undefined' ? true : this.opts.display.m;
+
             // Default pluralize (to true).
             this.opts.pluralize = typeof this.opts.pluralize === 'undefined' ? true : this.opts.pluralize;
 
@@ -103,25 +110,25 @@
                 // Determine the time period.
 
                 // Are the minutes greater than a week?
-                if (delta >= WEEK) {
+                if (delta >= WEEK && this.opts.display.w) {
                     parts.push(this.formatPart(Math.floor(delta / WEEK), 'w'));
                     delta -= Math.floor(delta / WEEK) * WEEK;
                 }
 
                 // Are the remaining(?) minutes greater than a day?
-                if (delta >= DAY) {
+                if (delta >= DAY && this.opts.display.d) {
                     parts.push(this.formatPart(Math.floor(delta / DAY), 'd'));
                     delta -= Math.floor(delta / DAY) * DAY;
                 }
 
                 // Are the remaining(?) minutes greather than an hour?
-                if (delta >= HOUR) {
+                if (delta >= HOUR && this.opts.display.h) {
                     parts.push(this.formatPart(Math.floor(delta / HOUR), 'h'));
                     delta -= Math.floor(delta / HOUR) * HOUR;
                 }
 
                 // Are there any remaining minutes?
-                if (delta > 0 && delta < HOUR) {
+                if (delta > 0 && this.opts.display.m) {
                     parts.push(this.formatPart(delta, 'm'));
                 }
 

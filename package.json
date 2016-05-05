@@ -19,6 +19,7 @@
   "devDependencies": {
     "babel-preset-es2015-rollup": "1.1.1",
     "chai": "3.5.0",
+    "clone": "^1.0.2",
     "istanbul": "0.4.3",
     "mocha": "2.4.5",
     "rollup": "0.26.0",
