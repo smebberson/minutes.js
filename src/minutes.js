@@ -20,7 +20,7 @@ export default class Minutes {
         this.minutes = parseInt(minutes);
 
         // Only accept an integer.
-        if (Number.isNaN(this.minutes)) {
+        if ((Number.isNaN ? Number.isNaN : isNaN)(this.minutes)) {
             throw new Error('Minutes accepts an integer representing minutes.');
         }
 
