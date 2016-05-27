@@ -2,6 +2,10 @@
 
 All notable changes to minutes.js will be documented here. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.1] - 2016-05-27
+
+- Falling back to `isNaN` if `Number.isNaN` is not present (to support IE).
+
 ## [1.1.0] - 2016-05-05
 
 - Added the `display` option to control which units are output.
