@@ -6,6 +6,7 @@ All notable changes to minutes.js will be documented here. This project adheres 
 
 -   Upgraded Rollup and Babel.
 -   Added Prettier.
+-   Updated code to use more es6 functionality.
 
 ## [1.1.1] - 2016-05-27
 
