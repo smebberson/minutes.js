@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "description": "A library for working with minutes in JavaScript.",
   "main": "dist/minutes.js",
-  "jsnext:main": "src/minutes.js",
+  "module": "src/minutes.js",
   "author": "Scott Mebberson",
   "scripts": {
     "pretest": "./node_modules/.bin/rollup -c",
@@ -17,13 +17,16 @@
     "url": "git+https://github.com/smebberson/minutes.js.git"
   },
   "devDependencies": {
-    "babel-preset-es2015-rollup": "1.1.1",
+    "@babel/core": "7.7.7",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",
+    "@babel/preset-env": "7.7.7",
+    "@rollup/plugin-node-resolve": "7.0.0",
     "chai": "3.5.0",
     "clone": "1.0.2",
     "istanbul": "0.4.3",
     "mocha": "2.4.5",
-    "rollup": "0.26.0",
-    "rollup-plugin-babel": "2.4.0"
+    "rollup": "1.29.0",
+    "rollup-plugin-babel": "4.3.3"
   },
   "keywords": [
     "duration",
