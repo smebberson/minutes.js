@@ -37,10 +37,10 @@ Minutes takes an `options` Object. They're all optional.
 
 ```
 units: {
-    'm': 'minute',
-    'h': 'hour',
-    'd': 'day',
-    'w': 'week'
+    m: 'minute',
+    h: 'hour',
+    d: 'day',
+    w: 'week'
 }
 ```
 
@@ -49,10 +49,10 @@ You can customise these to anything you like:
 ```
 const opts = {
     units: {
-        'm': 'min',
-        'h': 'hr',
-        'd': 'day',
-        'w': 'wk'
+        m: 'min',
+        h: 'hr',
+        d: 'day',
+        w: 'wk'
     }
 };
 
@@ -71,10 +71,10 @@ You can alter this:
 ```
 const opts = {
     units: {
-        'm': 'min',
-        'h': 'hr',
-        'd': 'day',
-        'w': 'wk'
+        m: 'min',
+        h: 'hr',
+        d: 'day',
+        w: 'wk'
     },
     pluralize: false
 };
@@ -91,10 +91,10 @@ minutes(2*7*24*60+6*24*60+7*60+40, opts);   // 2 wk, 6 day, 7 hr and 40 min
 
 ```
 tokens: {
-    'space': ' ',
-    'comma': ', ',
-    'and': 'and ',
-    'plural': 's'
+    conjunction: 'and ',
+    delimiter: ', ',
+    plural: 's',
+    space: ' '
 }
 ```
 
@@ -103,16 +103,16 @@ You can customise this:
 ```
 const opts = {
     units: {
-        'm': 'm',
-        'h': 'h',
-        'd': 'd',
-        'w': 'w'
+        m: 'm',
+        h: 'h',
+        d: 'd',
+        w: 'w'
     },
     pluralize: false,
     tokens: {
-        space: '',
-        comma: ' ',
-        and: ' '
+        conjunction: ' ',
+        delimiter: ' ',
+        space: ''
     }
 };
 
@@ -127,16 +127,16 @@ Or something else:
 ```
 const opts = {
     units: {
-        'm': '',
-        'h': '',
-        'd': '',
-        'w': ''
+        m: '',
+        h: '',
+        d: '',
+        w: ''
     },
     pluralize: false,
     tokens: {
-        space: '',
-        comma: '.',
-        and: '.'
+        conjunction: '.',
+        delimiter: '.',
+        space: ''
     }
 };
 
@@ -152,10 +152,10 @@ minutes(2*7*24*60+6*24*60+7*60+40, opts);   // 2w:6h:7h:40m
 
 ```
 display: {
-    'm': true,
-    'h': true,
-    'd': true,
-    'w': true
+    m: true,
+    h: true,
+    d: true,
+    w: true
 }
 ```
 
@@ -165,30 +165,30 @@ You can change this to display only certain units:
 
 minutes(10, {
     display: {
-        'h': false,
-        'd': false,
-        'w': false
+        h: false,
+        d: false,
+        w: false
     }
 });                                     // 10 minutes
 minutes(2*60+50, {
     display: {
-        'm': false,
-        'd': false,
-        'w': false
+        m: false,
+        d: false,
+        w: false
     }
 });                                     // 2 hours
 minutes(1*24*60+9*60+30, {
     display: {
-        'm': false,
-        'h': false,
-        'w': false
+        m: false,
+        h: false,
+        w: false
     }
 });                                     // 1 day
 minutes(3*7*24*60+6*24*60+7*60+40, {
     display: {
-        'm': false,
-        'h': false,
-        'd': false
+        m: false,
+        h: false,
+        d: false
     }
 });                                     // 3 weeks
 ```
