@@ -2,7 +2,6 @@
 
 [![Travis](https://img.shields.io/travis/smebberson/minutes.js.svg)](smebberson/minutes.js)
 [![npm](https://img.shields.io/npm/v/minutes.js.svg)](smebberson/minutes.js)
-[![Bower](https://img.shields.io/bower/v/minutes.js.svg)](smebberson/minutes.js)
 [![codecov.io](https://codecov.io/github/smebberson/minutes.js/coverage.svg?branch=master)](https://codecov.io/github/smebberson/minutes.js?branch=master)
 
 Minutes.js is a JavaScript library for working with minutes. Put minutes in, and get a string representing those minutes in weeks, days, hours and minutes.
@@ -11,7 +10,6 @@ Minutes.js is a JavaScript library for working with minutes. Put minutes in, and
 
 ```
 $ npm install minutes.js
-$ bower install minutes.js
 ```
 
 Supports browser, Node.js and AMD (and ES6 packages via `src/minutes.js`).

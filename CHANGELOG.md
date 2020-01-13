@@ -9,6 +9,7 @@ All notable changes to minutes.js will be documented here. This project adheres 
 -   Updated code to use more es6 functionality (via babel).
 -   Updated test code to use more es6 functionality (via babel).
 -   Removed mocha and chai, replacing them with Jest.
+-   Removed files that are no longer required.
 
 ## [1.1.1] - 2016-05-27
 
