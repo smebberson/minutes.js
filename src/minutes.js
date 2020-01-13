@@ -2,9 +2,9 @@
 // Constants
 //
 
-const HOUR = 60;
-const DAY = 24 * HOUR;
-const WEEK = 7 * DAY;
+export const HOUR = 60;
+export const DAY = 24 * HOUR;
+export const WEEK = 7 * DAY;
 
 export default class Minutes {
     /**

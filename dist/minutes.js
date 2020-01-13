@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
@@ -278,4 +280,7 @@ var Minutes =
         return Minutes;
     })();
 
-module.exports = Minutes;
+exports.DAY = DAY;
+exports.HOUR = HOUR;
+exports.WEEK = WEEK;
+exports.default = Minutes;

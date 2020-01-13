@@ -6,11 +6,15 @@
     "module": "src/minutes.js",
     "author": "Scott Mebberson",
     "scripts": {
-        "pretest": "./node_modules/.bin/rollup -c",
-        "test": "./node_modules/.bin/_mocha",
-        "pretest-coverage": "./node_modules/.bin/rollup -c",
-        "test-coverage": "./scripts/test-coverage",
-        "test-travis": "./scripts/test-travis"
+        "pretest": "yarn rollup -c",
+        "test": "yarn jest",
+        "pretest-coverage": "yarn rollup -c",
+        "test-coverage": "yarn jest --coverage"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.jsx?$": "babel-jest"
+        }
     },
     "repository": {
         "type": "git",
@@ -26,11 +30,10 @@
         "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",
         "@babel/preset-env": "7.7.7",
         "@rollup/plugin-node-resolve": "7.0.0",
-        "chai": "3.5.0",
-        "clone": "1.0.2",
+        "babel-jest": "24.9.0",
         "husky": "4.0.7",
         "istanbul": "0.4.3",
-        "mocha": "2.4.5",
+        "jest": "24.9.0",
         "prettier": "1.19.1",
         "pretty-quick": "2.0.1",
         "rollup": "1.29.0",

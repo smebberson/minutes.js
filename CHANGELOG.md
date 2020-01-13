@@ -6,7 +6,9 @@ All notable changes to minutes.js will be documented here. This project adheres 
 
 -   Upgraded Rollup and Babel.
 -   Added Prettier.
--   Updated code to use more es6 functionality.
+-   Updated code to use more es6 functionality (via babel).
+-   Updated test code to use more es6 functionality (via babel).
+-   Removed mocha and chai, replacing them with Jest.
 
 ## [1.1.1] - 2016-05-27
 

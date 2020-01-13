@@ -3,6 +3,6 @@ node_js:
     - 'node'
     - 'lts/*'
 script:
-    - 'npm run test-travis'
+    - 'yarn test-coverage'
 after_script:
-    - 'npm install codecov && ./node_modules/.bin/codecov'
+    - 'yarn add codecov && yarn codecov'
