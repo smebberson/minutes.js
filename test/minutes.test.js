@@ -149,9 +149,9 @@ describe('Minutes', () => {
                 },
                 pluralize: false,
                 tokens: {
-                    space: '',
-                    comma: ' ',
-                    and: ' '
+                    conjunction: ' ',
+                    delimiter: ' ',
+                    space: ''
                 }
             };
 
@@ -185,9 +185,9 @@ describe('Minutes', () => {
                     },
                     pluralize: false,
                     tokens: {
-                        space: '',
-                        comma: '^(?:=\\.*).+|$&$`$',
-                        and: '^(?:=\\.*).+|$&$`$'
+                        conjunction: '^(?:=\\.*).+|$&$`$',
+                        delimiter: '^(?:=\\.*).+|$&$`$',
+                        space: ''
                     }
                 };
 
@@ -209,9 +209,9 @@ describe('Minutes', () => {
                 },
                 pluralize: false,
                 tokens: {
-                    space: '',
-                    comma: ' ',
-                    and: ' '
+                    conjunction: ' ',
+                    delimiter: ' ',
+                    space: ''
                 }
             };
             const timespan = 6 * 7 * 24 * 60 + 3 * 24 * 60 + 2 * 60 + 55;
@@ -305,9 +305,9 @@ describe('Minutes', () => {
                         },
                         pluralize: false,
                         tokens: {
-                            space: '',
-                            comma: '',
-                            and: ''
+                            conjunction: '',
+                            delimiter: '',
+                            space: ''
                         },
                         units: {
                             m: '',

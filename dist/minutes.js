@@ -80,8 +80,8 @@ var defaultOptions = function defaultOptions() {
         _opts$pluralize,
         _opts$tokens,
         _opts$tokens$space,
-        _opts$tokens$comma,
-        _opts$tokens$and,
+        _opts$tokens$delimite,
+        _opts$tokens$conjunct,
         _opts$tokens$plural;
 
     var defaults =
@@ -150,15 +150,15 @@ var defaultOptions = function defaultOptions() {
         _opts$tokens$space !== void 0
             ? _opts$tokens$space
             : ' ';
-    opts.tokens.comma =
-        (_opts$tokens$comma = opts.tokens.comma) !== null &&
-        _opts$tokens$comma !== void 0
-            ? _opts$tokens$comma
+    opts.tokens.delimiter =
+        (_opts$tokens$delimite = opts.tokens.delimiter) !== null &&
+        _opts$tokens$delimite !== void 0
+            ? _opts$tokens$delimite
             : ', ';
-    opts.tokens.and =
-        (_opts$tokens$and = opts.tokens.and) !== null &&
-        _opts$tokens$and !== void 0
-            ? _opts$tokens$and
+    opts.tokens.conjunction =
+        (_opts$tokens$conjunct = opts.tokens.conjunction) !== null &&
+        _opts$tokens$conjunct !== void 0
+            ? _opts$tokens$conjunct
             : ' and ';
     opts.tokens.plural =
         (_opts$tokens$plural = opts.tokens.plural) !== null &&
@@ -222,17 +222,17 @@ var toString = function toString(mins, opts) {
 
     if (delta > 0 && opts.display.m) {
         parts.push(formatPart(delta, 'm', opts));
-    } // Create the regex to replace the last occurrence of `opts.tokens.comma` with `opts.tokens.and`.
+    } // Create the regex to replace the last occurrence of `opts.tokens.delimiter` with `opts.tokens.conjunction`.
 
     var lastOccurrence = new RegExp(
         ''
-            .concat(safeRegExpString(opts.tokens.comma), '(?!.*')
-            .concat(safeRegExpString(opts.tokens.comma), ')')
+            .concat(safeRegExpString(opts.tokens.delimiter), '(?!.*')
+            .concat(safeRegExpString(opts.tokens.delimiter), ')')
     ); // Join parts with `,`, other than the final one which should be `and`.
 
     return parts
-        .join(opts.tokens.comma)
-        .replace(lastOccurrence, opts.tokens.and);
+        .join(opts.tokens.delimiter)
+        .replace(lastOccurrence, opts.tokens.conjunction);
 };
 /**
  * Create a new instance of minutes, scoped to an integer passed in.

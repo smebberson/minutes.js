@@ -29,8 +29,8 @@ const defaultOptions = (defaults = {}) => {
     // Default separation tokens.
     opts.tokens = opts.tokens ?? {};
     opts.tokens.space = opts.tokens.space ?? ' ';
-    opts.tokens.comma = opts.tokens.comma ?? ', ';
-    opts.tokens.and = opts.tokens.and ?? ' and ';
+    opts.tokens.delimiter = opts.tokens.delimiter ?? ', ';
+    opts.tokens.conjunction = opts.tokens.conjunction ?? ' and ';
     opts.tokens.plural = opts.tokens.plural ?? 's';
 
     return opts;
@@ -97,17 +97,17 @@ const toString = (mins, opts) => {
         parts.push(formatPart(delta, 'm', opts));
     }
 
-    // Create the regex to replace the last occurrence of `opts.tokens.comma` with `opts.tokens.and`.
+    // Create the regex to replace the last occurrence of `opts.tokens.delimiter` with `opts.tokens.conjunction`.
     const lastOccurrence = new RegExp(
-        `${safeRegExpString(opts.tokens.comma)}(?!.*${safeRegExpString(
-            opts.tokens.comma
+        `${safeRegExpString(opts.tokens.delimiter)}(?!.*${safeRegExpString(
+            opts.tokens.delimiter
         )})`
     );
 
     // Join parts with `,`, other than the final one which should be `and`.
     return parts
-        .join(opts.tokens.comma)
-        .replace(lastOccurrence, opts.tokens.and);
+        .join(opts.tokens.delimiter)
+        .replace(lastOccurrence, opts.tokens.conjunction);
 };
 
 /**

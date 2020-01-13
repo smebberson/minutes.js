@@ -11,6 +11,16 @@ All notable changes to minutes.js will be documented here. This project adheres 
 -   Removed mocha and chai, replacing them with Jest.
 -   Removed files that are no longer required.
 -   Removed usage of Class, minutes is now a single function.
+-   `options.tokens.comma` is now `options.tokens.delimiter`.
+-   `options.tokens.and` is now `options.tokens.conjunction`.
+
+### Breaking changes
+
+-   The export has been renamed from `Minutes` to `minutes`.
+-   You can no longer use `new` with minutes, it is now a single function.
+-   The `toString()` method has been removed, instead, use the single function.
+-   `options.tokens.comma` is now `options.tokens.delimiter`.
+-   `options.tokens.and` is now `options.tokens.conjunction`.
 
 ## [1.1.1] - 2016-05-27
 
