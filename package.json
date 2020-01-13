@@ -9,7 +9,8 @@
         "pretest": "yarn rollup -c",
         "test": "yarn jest",
         "pretest-coverage": "yarn rollup -c",
-        "test-coverage": "yarn jest --coverage"
+        "test-coverage": "yarn jest --coverage",
+        "watch": "yarn rollup -wc"
     },
     "jest": {
         "transform": {

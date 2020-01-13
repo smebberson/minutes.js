@@ -17,16 +17,15 @@ Supports browser, Node.js and AMD (and ES6 packages via `src/minutes.js`).
 ## API
 
 ```
-var minutes = new Minutes(10),
-    hours = new Minutes(2*60+50),
-    days = new Minutes(2*24*60+9*60+30),
-    weeks = new Minutes(2*7*24*60+6*24*60+7*60+40);
-
-minutes.toString(); // 10 minutes
-hours.toString(); // 2 hours and 50 minutes
-days.toString(); // 2 days, 6 hours and 30 minutes
-weeks.toString(); // 2 weeks, 6 days, 7 hours and 40 minutes
+minutes(10);                        // 10 minutes
+minutes(2*60+50);                   // 2 hours and 50 minutes
+minutes(2*24*60+9*60+30);           // 2 days, 6 hours and 30 minutes
+minutes(2*7*24*60+6*24*60+7*60+40); // 2 weeks, 6 days, 7 hours and 40 minutes
 ```
+
+### Minutes
+
+Minutes takes a `minutes` number. It should be an integer representing minutes.
 
 ### Options
 
@@ -48,23 +47,19 @@ units: {
 You can customise these to anything you like:
 
 ```
-var opts = {
-        units: {
-            'm': 'min',
-            'h': 'hr',
-            'd': 'day',
-            'w': 'wk'
-        }
-    },
-    minutes = new Minutes(10, opts),
-    hours = new Minutes(2*60+50, opts),
-    days = new Minutes(2*24*60+9*60+30, opts),
-    weeks = new Minutes(2*7*24*60+6*24*60+7*60+40, opts);
+const opts = {
+    units: {
+        'm': 'min',
+        'h': 'hr',
+        'd': 'day',
+        'w': 'wk'
+    }
+};
 
-minutes.toString(); // 10 mins
-hours.toString(); // 2 hrs and 50 mins
-days.toString(); // 2 days, 6 hrs and 30 mins
-weeks.toString(); // 2 wks, 6 days, 7 hrs and 40 mins
+minutes(10, opts);                          // 10 mins
+minutes(2*60+50, opts);                     // 2 hrs and 50 mins
+minutes(2*24*60+9*60+30, opts);             // 2 days, 6 hrs and 30 mins
+minutes(2*7*24*60+6*24*60+7*60+40, opts);   // 2 wks, 6 days, 7 hrs and 40 mins
 ```
 
 #### Pluralize
@@ -74,24 +69,20 @@ weeks.toString(); // 2 wks, 6 days, 7 hrs and 40 mins
 You can alter this:
 
 ```
-var opts = {
-        units: {
-            'm': 'min',
-            'h': 'hr',
-            'd': 'day',
-            'w': 'wk'
-        },
-        pluralize: false
+const opts = {
+    units: {
+        'm': 'min',
+        'h': 'hr',
+        'd': 'day',
+        'w': 'wk'
     },
-    minutes = new Minutes(10, opts),
-    hours = new Minutes(2*60+50, opts),
-    days = new Minutes(2*24*60+9*60+30, opts),
-    weeks = new Minutes(2*7*24*60+6*24*60+7*60+40, opts);
+    pluralize: false
+};
 
-minutes.toString(); // 10 min
-hours.toString(); // 2 hr and 50 min
-days.toString(); // 2 day, 6 hr and 30 min
-weeks.toString(); // 2 wk, 6 day, 7 hr and 40 min
+minutes(10, opts);                          // 10 min
+minutes(2*60+50, opts);                     // 2 hr and 50 min
+minutes(2*24*60+9*60+30, opts);             // 2 day, 6 hr and 30 min
+minutes(2*7*24*60+6*24*60+7*60+40, opts);   // 2 wk, 6 day, 7 hr and 40 min
 ```
 
 #### Tokens
@@ -107,60 +98,52 @@ tokens: {
 }
 ```
 
-You can customise this to produce:
+You can customise this:
 
 ```
-var opts = {
-        units: {
-            'm': 'm',
-            'h': 'h',
-            'd': 'd',
-            'w': 'w'
-        },
-        pluralize: false,
-        tokens: {
-            space: '',
-            comma: ' ',
-            and: ' '
-        }
+const opts = {
+    units: {
+        'm': 'm',
+        'h': 'h',
+        'd': 'd',
+        'w': 'w'
     },
-    minutes = new Minutes(10, opts),
-    hours = new Minutes(2*60+50, opts),
-    days = new Minutes(2*24*60+9*60+30, opts),
-    weeks = new Minutes(2*7*24*60+6*24*60+7*60+40, opts);
+    pluralize: false,
+    tokens: {
+        space: '',
+        comma: ' ',
+        and: ' '
+    }
+};
 
-minutes.toString(); // 10m
-hours.toString(); // 2h 50m
-days.toString(); // 2d 6h 30m
-weeks.toString(); // 2w 6d 7h 40m
+minutes(10, opts);                          // 10m
+minutes(2*60+50, opts);                     // 2h 50m
+minutes(2*24*60+9*60+30, opts);             // 2d 6h 30m
+minutes(2*7*24*60+6*24*60+7*60+40, opts);   // 2w 6d 7h 40m
 ```
 
 Or something else:
 
 ```
-var opts = {
-        units: {
-            'm': '',
-            'h': '',
-            'd': '',
-            'w': ''
-        },
-        pluralize: false,
-        tokens: {
-            space: '',
-            comma: '.',
-            and: '.'
-        }
+const opts = {
+    units: {
+        'm': '',
+        'h': '',
+        'd': '',
+        'w': ''
     },
-    minutes = new Minutes(10, opts),
-    hours = new Minutes(2*60+50, opts),
-    days = new Minutes(2*24*60+9*60+30, opts),
-    weeks = new Minutes(2*7*24*60+6*24*60+7*60+40, opts);
+    pluralize: false,
+    tokens: {
+        space: '',
+        comma: '.',
+        and: '.'
+    }
+};
 
-minutes.toString(); // 10m
-hours.toString(); // 2h:50m
-days.toString(); // 2d:6h:30m
-weeks.toString(); // 2w:6h:7h:40m
+minutes(10, opts);                          // 10m
+minutes(2*60+50, opts);                     // 2h:50m
+minutes(2*24*60+9*60+30, opts);             // 2d:6h:30m
+minutes(2*7*24*60+6*24*60+7*60+40, opts);   // 2w:6h:7h:40m
 ```
 
 #### Display
@@ -179,47 +162,35 @@ display: {
 You can change this to display only certain units:
 
 ```
-var opts = {
-        display: {
-            'm': 'min',
-            'h': 'hr',
-            'd': 'day',
-            'w': 'wk'
-        }
-    },
-    minutes = new Minutes(10, {
-        display: {
-            'h': false,
-            'd': false,
-            'w': false
-        }
-    }),
-    hours = new Minutes(2*60+50, {
-        display: {
-            'm': false,
-            'd': false,
-            'w': false
-        }
-    }),
-    days = new Minutes(1*24*60+9*60+30, {
-        display: {
-            'm': false,
-            'h': false,
-            'w': false
-        }
-    }),
-    weeks = new Minutes(3*7*24*60+6*24*60+7*60+40, {
-        display: {
-            'm': false,
-            'h': false,
-            'd': false
-        }
-    });
 
-minutes.toString(); // 10 minutes
-hours.toString(); // 2 hours
-days.toString(); // 1 day
-weeks.toString(); // 3 weeks
+minutes(10, {
+    display: {
+        'h': false,
+        'd': false,
+        'w': false
+    }
+});                                     // 10 minutes
+minutes(2*60+50, {
+    display: {
+        'm': false,
+        'd': false,
+        'w': false
+    }
+});                                     // 2 hours
+minutes(1*24*60+9*60+30, {
+    display: {
+        'm': false,
+        'h': false,
+        'w': false
+    }
+});                                     // 1 day
+minutes(3*7*24*60+6*24*60+7*60+40, {
+    display: {
+        'm': false,
+        'h': false,
+        'd': false
+    }
+});                                     // 3 weeks
 ```
 
 ## Change log
