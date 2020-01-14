@@ -18,10 +18,15 @@ const defaultOptions = (defaults = {}) => {
 
     // Default the time units to display.
     opts.display = opts.display ?? {};
+    opts.display.inclusive = opts.display.inclusive ?? false;
     opts.display.w = opts.display.w ?? true;
+    opts.display.ww = opts.display.ww ?? false;
     opts.display.d = opts.display.d ?? true;
+    opts.display.dd = opts.display.dd ?? false;
     opts.display.h = opts.display.h ?? true;
+    opts.display.hh = opts.display.hh ?? false;
     opts.display.m = opts.display.m ?? true;
+    opts.display.mm = opts.display.mm ?? false;
 
     // Default pluralize (to true).
     opts.pluralize = opts.pluralize ?? true;
@@ -36,30 +41,26 @@ const defaultOptions = (defaults = {}) => {
     return opts;
 };
 
+const padWithZero = (value, leadingZero) =>
+    leadingZero && value < 10 ? `0${value}` : value;
+
 /**
  * Format a time unit (i.e. 1 h as '1 hour').
  * @param  {Number} value The value of the time unit.
  * @param  {String} unit  The time unit (either `'w'`, `'h'`, `'m'`, `'d'`).
  * @return {String}       The string representation of the time unit (i.e. 5 hours).
  */
-const formatPart = (value, unit, opts) => {
-    let str = value + opts.tokens.space + opts.units[unit];
+const formatPart = (value, unit, leadingZero, opts) => {
+    let str =
+        padWithZero(value, leadingZero) + opts.tokens.space + opts.units[unit];
 
     // Make the unit representation plural if required.
-    if (opts.pluralize && value > 1) {
+    if (opts.pluralize && (value > 1 || value === 0)) {
         str += opts.tokens.plural;
     }
 
     return str;
 };
-
-/**
- * Return a string that is safe to be used when dynamically building a regular expression.
- * @param  {String} str The string to escaped.
- * @return {String}     An escaped version of `str`.
- */
-const safeRegExpString = (str) =>
-    str.replace(/(?:\.|\^|\$|\&|\`|\*|\(|\)|\||\?|\:|\=)/g, '\\$&');
 
 /**
  * Using the options provided to the constructor take the value of the minutes and
@@ -75,39 +76,54 @@ const toString = (mins, opts) => {
     // Determine the time period.
 
     // Are the minutes greater than a week?
-    if (delta >= WEEK && opts.display.w) {
-        parts.push(formatPart(Math.floor(delta / WEEK), 'w', opts));
+    if (
+        (delta >= WEEK || opts.display.inclusive) &&
+        (opts.display.w || opts.display.ww)
+    ) {
+        parts.push(
+            formatPart(Math.floor(delta / WEEK), 'w', opts.display.ww, opts)
+        );
         delta -= Math.floor(delta / WEEK) * WEEK;
     }
 
     // Are the remaining(?) minutes greater than a day?
-    if (delta >= DAY && opts.display.d) {
-        parts.push(formatPart(Math.floor(delta / DAY), 'd', opts));
+    if (
+        (delta >= DAY || opts.display.inclusive) &&
+        (opts.display.d || opts.display.dd)
+    ) {
+        parts.push(
+            formatPart(Math.floor(delta / DAY), 'd', opts.display.dd, opts)
+        );
         delta -= Math.floor(delta / DAY) * DAY;
     }
 
     // Are the remaining(?) minutes greater than an hour?
-    if (delta >= HOUR && opts.display.h) {
-        parts.push(formatPart(Math.floor(delta / HOUR), 'h', opts));
+    if (
+        (delta >= HOUR || opts.display.inclusive) &&
+        (opts.display.h || opts.display.hh)
+    ) {
+        parts.push(
+            formatPart(Math.floor(delta / HOUR), 'h', opts.display.hh, opts)
+        );
         delta -= Math.floor(delta / HOUR) * HOUR;
     }
 
     // Are there any remaining minutes?
-    if (delta > 0 && opts.display.m) {
-        parts.push(formatPart(delta, 'm', opts));
+    if (
+        (delta > 0 || opts.display.inclusive) &&
+        (opts.display.m || opts.display.mm)
+    ) {
+        parts.push(formatPart(delta, 'm', opts.display.mm, opts));
     }
 
-    // Create the regex to replace the last occurrence of `opts.tokens.delimiter` with `opts.tokens.conjunction`.
-    const lastOccurrence = new RegExp(
-        `${safeRegExpString(opts.tokens.delimiter)}(?!.*${safeRegExpString(
-            opts.tokens.delimiter
-        )})`
-    );
+    if (parts.length === 1) {
+        return parts.toString();
+    }
 
-    // Join parts with `,`, other than the final one which should be `and`.
-    return parts
-        .join(opts.tokens.delimiter)
-        .replace(lastOccurrence, opts.tokens.conjunction);
+    // Join parts with `delimiter`, other than the final one which should be `conjunction`.
+    return `${parts.slice(0, parts.length - 1).join(opts.tokens.delimiter)}${
+        opts.tokens.conjunction
+    }${parts[parts.length - 1]}`;
 };
 
 /**

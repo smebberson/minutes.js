@@ -6,15 +6,27 @@
     "module": "src/minutes.js",
     "author": "Scott Mebberson",
     "scripts": {
-        "pretest": "yarn rollup -c",
+        "build": "yarn rollup -c",
         "test": "yarn jest",
-        "pretest-coverage": "yarn rollup -c",
         "test-coverage": "yarn jest --coverage",
         "watch": "yarn rollup -wc"
     },
     "jest": {
         "transform": {
-            "^.+\\.jsx?$": "babel-jest"
+            "^.+\\.jsx?$": [
+                "babel-jest",
+                {
+                    "sourceMaps": true,
+                    "presets": [
+                        [
+                            "@babel/env"
+                        ]
+                    ],
+                    "plugins": [
+                        "@babel/plugin-proposal-nullish-coalescing-operator"
+                    ]
+                }
+            ]
         }
     },
     "repository": {

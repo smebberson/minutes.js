@@ -73,10 +73,15 @@ var defaultOptions = function defaultOptions() {
         _opts$units$h,
         _opts$units$m,
         _opts$display,
+        _opts$display$inclusi,
         _opts$display$w,
+        _opts$display$ww,
         _opts$display$d,
+        _opts$display$dd,
         _opts$display$h,
+        _opts$display$hh,
         _opts$display$m,
+        _opts$display$mm,
         _opts$pluralize,
         _opts$tokens,
         _opts$tokens$space,
@@ -114,26 +119,51 @@ var defaultOptions = function defaultOptions() {
         (_opts$display = opts.display) !== null && _opts$display !== void 0
             ? _opts$display
             : {};
+    opts.display.inclusive =
+        (_opts$display$inclusi = opts.display.inclusive) !== null &&
+        _opts$display$inclusi !== void 0
+            ? _opts$display$inclusi
+            : false;
     opts.display.w =
         (_opts$display$w = opts.display.w) !== null &&
         _opts$display$w !== void 0
             ? _opts$display$w
             : true;
+    opts.display.ww =
+        (_opts$display$ww = opts.display.ww) !== null &&
+        _opts$display$ww !== void 0
+            ? _opts$display$ww
+            : false;
     opts.display.d =
         (_opts$display$d = opts.display.d) !== null &&
         _opts$display$d !== void 0
             ? _opts$display$d
             : true;
+    opts.display.dd =
+        (_opts$display$dd = opts.display.dd) !== null &&
+        _opts$display$dd !== void 0
+            ? _opts$display$dd
+            : false;
     opts.display.h =
         (_opts$display$h = opts.display.h) !== null &&
         _opts$display$h !== void 0
             ? _opts$display$h
             : true;
+    opts.display.hh =
+        (_opts$display$hh = opts.display.hh) !== null &&
+        _opts$display$hh !== void 0
+            ? _opts$display$hh
+            : false;
     opts.display.m =
         (_opts$display$m = opts.display.m) !== null &&
         _opts$display$m !== void 0
             ? _opts$display$m
-            : true; // Default pluralize (to true).
+            : true;
+    opts.display.mm =
+        (_opts$display$mm = opts.display.mm) !== null &&
+        _opts$display$mm !== void 0
+            ? _opts$display$mm
+            : false; // Default pluralize (to true).
 
     opts.pluralize =
         (_opts$pluralize = opts.pluralize) !== null &&
@@ -167,6 +197,10 @@ var defaultOptions = function defaultOptions() {
             : 's';
     return opts;
 };
+
+var padWithZero = function padWithZero(value, leadingZero) {
+    return leadingZero && value < 10 ? '0'.concat(value) : value;
+};
 /**
  * Format a time unit (i.e. 1 h as '1 hour').
  * @param  {Number} value The value of the time unit.
@@ -174,23 +208,15 @@ var defaultOptions = function defaultOptions() {
  * @return {String}       The string representation of the time unit (i.e. 5 hours).
  */
 
-var formatPart = function formatPart(value, unit, opts) {
-    var str = value + opts.tokens.space + opts.units[unit]; // Make the unit representation plural if required.
+var formatPart = function formatPart(value, unit, leadingZero, opts) {
+    var str =
+        padWithZero(value, leadingZero) + opts.tokens.space + opts.units[unit]; // Make the unit representation plural if required.
 
-    if (opts.pluralize && value > 1) {
+    if (opts.pluralize && (value > 1 || value === 0)) {
         str += opts.tokens.plural;
     }
 
     return str;
-};
-/**
- * Return a string that is safe to be used when dynamically building a regular expression.
- * @param  {String} str The string to escaped.
- * @return {String}     An escaped version of `str`.
- */
-
-var safeRegExpString = function safeRegExpString(str) {
-    return str.replace(/(?:\.|\^|\$|\&|\`|\*|\(|\)|\||\?|\:|\=)/g, '\\$&');
 };
 /**
  * Using the options provided to the constructor take the value of the minutes and
@@ -205,34 +231,51 @@ var toString = function toString(mins, opts) {
     var delta = mins; // Determine the time period.
     // Are the minutes greater than a week?
 
-    if (delta >= WEEK && opts.display.w) {
-        parts.push(formatPart(Math.floor(delta / WEEK), 'w', opts));
+    if (
+        (delta >= WEEK || opts.display.inclusive) &&
+        (opts.display.w || opts.display.ww)
+    ) {
+        parts.push(
+            formatPart(Math.floor(delta / WEEK), 'w', opts.display.ww, opts)
+        );
         delta -= Math.floor(delta / WEEK) * WEEK;
     } // Are the remaining(?) minutes greater than a day?
 
-    if (delta >= DAY && opts.display.d) {
-        parts.push(formatPart(Math.floor(delta / DAY), 'd', opts));
+    if (
+        (delta >= DAY || opts.display.inclusive) &&
+        (opts.display.d || opts.display.dd)
+    ) {
+        parts.push(
+            formatPart(Math.floor(delta / DAY), 'd', opts.display.dd, opts)
+        );
         delta -= Math.floor(delta / DAY) * DAY;
     } // Are the remaining(?) minutes greater than an hour?
 
-    if (delta >= HOUR && opts.display.h) {
-        parts.push(formatPart(Math.floor(delta / HOUR), 'h', opts));
+    if (
+        (delta >= HOUR || opts.display.inclusive) &&
+        (opts.display.h || opts.display.hh)
+    ) {
+        parts.push(
+            formatPart(Math.floor(delta / HOUR), 'h', opts.display.hh, opts)
+        );
         delta -= Math.floor(delta / HOUR) * HOUR;
     } // Are there any remaining minutes?
 
-    if (delta > 0 && opts.display.m) {
-        parts.push(formatPart(delta, 'm', opts));
-    } // Create the regex to replace the last occurrence of `opts.tokens.delimiter` with `opts.tokens.conjunction`.
+    if (
+        (delta > 0 || opts.display.inclusive) &&
+        (opts.display.m || opts.display.mm)
+    ) {
+        parts.push(formatPart(delta, 'm', opts.display.mm, opts));
+    }
 
-    var lastOccurrence = new RegExp(
-        ''
-            .concat(safeRegExpString(opts.tokens.delimiter), '(?!.*')
-            .concat(safeRegExpString(opts.tokens.delimiter), ')')
-    ); // Join parts with `,`, other than the final one which should be `and`.
+    if (parts.length === 1) {
+        return parts.toString();
+    } // Join parts with `delimiter`, other than the final one which should be `conjunction`.
 
-    return parts
-        .join(opts.tokens.delimiter)
-        .replace(lastOccurrence, opts.tokens.conjunction);
+    return ''
+        .concat(parts.slice(0, parts.length - 1).join(opts.tokens.delimiter))
+        .concat(opts.tokens.conjunction)
+        .concat(parts[parts.length - 1]);
 };
 /**
  * Create a new instance of minutes, scoped to an integer passed in.
