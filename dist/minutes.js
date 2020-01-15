@@ -57,14 +57,42 @@ function _objectSpread2(target) {
 var HOUR = 60;
 var DAY = 24 * HOUR;
 var WEEK = 7 * DAY;
+var presets = {
+  time: {
+    display: {
+      inclusive: true,
+      d: false,
+      hh: true,
+      mm: true,
+      w: false
+    },
+    pluralize: false,
+    tokens: {
+      conjunction: ':',
+      delimiter: '',
+      space: ''
+    },
+    units: {
+      m: '',
+      h: '',
+      d: '',
+      w: ''
+    }
+  }
+};
 
-var defaultOptions = function defaultOptions() {
+var applyPresets = function applyPresets(opts) {
+  if (opts.preset && Object.keys(presets).includes(opts.preset)) {
+    return _objectSpread2({}, presets[opts.preset], {}, opts);
+  }
+
+  return opts;
+};
+
+var defaultOptions = function defaultOptions(defaults) {
   var _opts$units, _opts$units$w, _opts$units$d, _opts$units$h, _opts$units$m, _opts$display, _opts$display$inclusi, _opts$display$w, _opts$display$ww, _opts$display$d, _opts$display$dd, _opts$display$h, _opts$display$hh, _opts$display$m, _opts$display$mm, _opts$pluralize, _opts$tokens, _opts$tokens$space, _opts$tokens$delimite, _opts$tokens$conjunct, _opts$tokens$plural;
 
-  var defaults = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var opts = _objectSpread2({}, defaults); // Default the time units.
-
+  var opts = applyPresets(_objectSpread2({}, defaults)); // Default the time units.
 
   opts.units = (_opts$units = opts.units) !== null && _opts$units !== void 0 ? _opts$units : {};
   opts.units.w = (_opts$units$w = opts.units.w) !== null && _opts$units$w !== void 0 ? _opts$units$w : 'week';

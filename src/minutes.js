@@ -6,8 +6,40 @@ export const HOUR = 60;
 export const DAY = 24 * HOUR;
 export const WEEK = 7 * DAY;
 
-const defaultOptions = (defaults = {}) => {
-    const opts = { ...defaults };
+const presets = {
+    time: {
+        display: {
+            inclusive: true,
+            d: false,
+            hh: true,
+            mm: true,
+            w: false
+        },
+        pluralize: false,
+        tokens: {
+            conjunction: ':',
+            delimiter: '',
+            space: ''
+        },
+        units: {
+            m: '',
+            h: '',
+            d: '',
+            w: ''
+        }
+    }
+};
+
+const applyPresets = (opts) => {
+    if (opts.preset && Object.keys(presets).includes(opts.preset)) {
+        return { ...presets[opts.preset], ...opts };
+    }
+
+    return opts;
+};
+
+const defaultOptions = (defaults) => {
+    const opts = applyPresets({ ...defaults });
 
     // Default the time units.
     opts.units = opts.units ?? {};

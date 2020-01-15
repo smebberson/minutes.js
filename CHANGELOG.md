@@ -15,6 +15,7 @@ All notable changes to minutes.js will be documented here. This project adheres 
 -   `options.tokens.and` is now `options.tokens.conjunction`.
 -   Added double-digit display capabilities to prefix units with leading zeros.
 -   Added inclusive display capabilities for units to display even when 0.
+-   Added preset options to automate common options configurations.
 
 ### Breaking changes
 

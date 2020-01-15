@@ -10,6 +10,29 @@ describe('minutes', () => {
 
         expect(fn).toThrow(Error, /accepts an integer/);
     });
+    describe('will use Number.isNan', () => {
+        const originalNumberIsNan = Number.isNaN;
+
+        beforeAll(() => {
+            Number.isNaN = undefined;
+        });
+
+        afterAll(() => {
+            Number.isNaN = originalNumberIsNan;
+        });
+        test('before defaulting to isNaN', () => {
+            isNaN = Number.isNaN;
+            Number.isNaN = undefined;
+
+            const fn = () => {
+                minutes('asdf');
+            };
+
+            expect(fn).toThrow(Error, /accepts an integer/);
+
+            Number.isNaN = isNaN;
+        });
+    });
 });
 
 describe('minutes will format single time units', () => {
@@ -431,5 +454,16 @@ describe('minutes will format using custom display options', () => {
                 }
             })
         ).toEqual('1082:57');
+    });
+});
+
+describe('minutes will automate options using presets', () => {
+    test('the time preset', () => {
+        expect(minutes(9, { preset: 'time' })).toEqual('00:09');
+    });
+    test('the time preset with overrides', () => {
+        expect(
+            minutes(9, { preset: 'time', units: { h: 'h', m: 'm' } })
+        ).toEqual('00h:09m');
     });
 });
